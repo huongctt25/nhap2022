@@ -1,0 +1,8 @@
+.custom-border {
+  border-radius: 20px !important;
+  background-color: lightblue;
+}
+
+input[type="text"] {
+  border-radius: 10px;
+}
