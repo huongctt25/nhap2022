@@ -1,14 +1,19 @@
-import { useState, useMemo } from "react";
-import "../css/bootstrap.css";
+import { useState } from "react";
+import { toast, ToastContainer } from "react-toastify";
 import "../css/style.css";
+import "../css/bootstrap.css";
+import "react-toastify/dist/ReactToastify.css";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [city, setCity] = useState("hanoi");
   const [file, setFile] = useState(null);
   console.log("login");
+  const navigate = useNavigate();
 
   const handleLogin = (email, city) => {
+    toast.success("Hello");
     console.log({
       payload: {
         email,
@@ -16,9 +21,16 @@ const Login = () => {
         file,
       },
     });
+    setEmail("");
+    setCity("hanoi");
+    setFile(null);
+    setTimeout(() => {
+      navigate("/listings");
+    }, 2000);
   };
   return (
     <>
+      <ToastContainer />
       <div className="container">
         <div className="center">
           <h1>Hello</h1>

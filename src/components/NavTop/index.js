@@ -1,8 +1,8 @@
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 
 const NavTop = () => {
   return (
-    <nav className="navbar navbar-expand-lg ">
+    <nav className="navbar navbar-expand-lg bg-info">
       <Link to="/" className="site-title">
         Home
       </Link>
@@ -21,14 +21,14 @@ const NavTop = () => {
       <div className="collapse navbar-collapse" id="navbarSupportedContent">
         <ul className="navbar-nav mr-auto">
           <li className="nav-item">
-            <Link to="/listings" className="nav-link">
+            <NavLink to="/listings" className="nav-link ">
               Listings
-            </Link>
+            </NavLink>
           </li>
           <li className="nav-item active">
-            <Link to="/login" className="nav-link">
+            <NavLink to="/login" className="nav-link light">
               Login
-            </Link>
+            </NavLink>
           </li>
           <li className="nav-item dropdown">
             {/* <a
@@ -74,10 +74,7 @@ const NavTop = () => {
             placeholder="Search"
             aria-label="Search"
           />
-          <button
-            className="btn btn-outline-success my-2 my-sm-0"
-            type="submit"
-          >
+          <button className="btn btn-outline-danger my-2 my-sm-0" type="submit">
             Search
           </button>
         </form>

@@ -1,12 +1,12 @@
-const Listings = () => {
-  console.log("listings");
+const NotFound = () => {
+  console.log("not found");
   return (
     <div className="container">
       <div className="center">
-        <h1>Listings</h1>
+        <h1>Not found</h1>
       </div>
     </div>
   );
 };
 
-export default Listings;
+export default NotFound;
