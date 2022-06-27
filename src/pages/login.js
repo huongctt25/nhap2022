@@ -26,7 +26,7 @@ const Login = () => {
     setFile(null);
     setTimeout(() => {
       navigate("/listings");
-    }, 2000);
+    }, 3000);
   };
   return (
     <>
