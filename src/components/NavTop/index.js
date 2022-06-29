@@ -4,9 +4,9 @@ const NavTop = () => {
   return (
     <nav
       className="navbar navbar-expand-lg"
-      style={{ backgroundColor: "rgb(213, 201, 251)" }}
+      style={{ backgroundColor: "#7D9BF6" }}
     >
-      <NavLink to="/" className="site-title">
+      <NavLink to="/" className="site-title text-light">
         Home
       </NavLink>
 

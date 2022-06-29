@@ -49,7 +49,7 @@ const MapCustom = (props) => {
         anchor="bottom"
         style={{ width: "20px" }}
       >
-        <IoIosPin style={{ color: "rgb(245, 151, 140)" }} size={35} />
+        <IoIosPin style={{ color: "rgb(245, 151, 140)" }} size={45} />
       </Marker>
     </MapItem>
   );
