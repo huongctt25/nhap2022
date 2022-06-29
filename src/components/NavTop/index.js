@@ -2,7 +2,10 @@ import { Link, NavLink } from "react-router-dom";
 
 const NavTop = () => {
   return (
-    <nav className="navbar navbar-expand-lg bg-info">
+    <nav
+      className="navbar navbar-expand-lg"
+      style={{ backgroundColor: "rgb(213, 201, 251)" }}
+    >
       <Link to="/" className="site-title">
         Home
       </Link>
@@ -23,6 +26,11 @@ const NavTop = () => {
           <li className="nav-item">
             <NavLink to="/listings" className="nav-link ">
               Listings
+            </NavLink>
+          </li>
+          <li className="nav-item">
+            <NavLink to="/cases" className="nav-link ">
+              Cases
             </NavLink>
           </li>
           <li className="nav-item active">
