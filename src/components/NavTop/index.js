@@ -6,20 +6,9 @@ const NavTop = () => {
       className="navbar navbar-expand-lg"
       style={{ backgroundColor: "rgb(213, 201, 251)" }}
     >
-      <Link to="/" className="site-title">
+      <NavLink to="/" className="site-title">
         Home
-      </Link>
-      <button
-        className="navbar-toggler"
-        type="button"
-        data-toggle="collapse"
-        data-target="#navbarSupportedContent"
-        aria-controls="navbarSupportedContent"
-        aria-expanded="false"
-        aria-label="Toggle navigation"
-      >
-        <span className="navbar-toggler-icon"></span>
-      </button>
+      </NavLink>
 
       <div className="collapse navbar-collapse" id="navbarSupportedContent">
         <ul className="navbar-nav mr-auto">
@@ -29,8 +18,8 @@ const NavTop = () => {
             </NavLink>
           </li>
           <li className="nav-item">
-            <NavLink to="/cases" className="nav-link ">
-              Cases
+            <NavLink to="/peoples" className="nav-link ">
+              People
             </NavLink>
           </li>
           <li className="nav-item active">
@@ -68,11 +57,6 @@ const NavTop = () => {
                 Action
               </Link>
             </div> */}
-          </li>
-          <li className="nav-item">
-            <a className="nav-link disabled" href="#">
-              Disabled
-            </a>
           </li>
         </ul>
         <form className="form-inline my-2 my-lg-0">

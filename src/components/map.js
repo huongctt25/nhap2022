@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Map as MapItem, Marker } from "react-map-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
-import { BsArrowDownCircleFill } from "react-icons/bs";
+import { IoIosPin } from "react-icons/io";
 import { useState, useEffect, useCallback } from "react";
 const MapCustom = (props) => {
   const defaultGeo = new Map([
@@ -36,7 +36,7 @@ const MapCustom = (props) => {
     <MapItem
       {...viewport}
       initialViewState={initialViewState}
-      style={{ width: 600, height: 600 }}
+      style={{ width: 600, height: 400 }}
       mapStyle="mapbox://styles/mapbox/streets-v9"
       mapboxAccessToken={process.env.REACT_APP_MAP_TOKEN}
       onClick={getPosition}
@@ -49,10 +49,7 @@ const MapCustom = (props) => {
         anchor="bottom"
         style={{ width: "20px" }}
       >
-        <BsArrowDownCircleFill
-          style={{ color: "rgb(245, 151, 140)" }}
-          size={25}
-        />
+        <IoIosPin style={{ color: "rgb(245, 151, 140)" }} size={35} />
       </Marker>
     </MapItem>
   );

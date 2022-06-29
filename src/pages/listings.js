@@ -1,10 +1,10 @@
-import { useCallback, useState, useRef } from "react";
+import { useRef, useState } from "react";
 
-import { toast, ToastContainer } from "react-toastify";
-import axios from "axios";
+import { ToastContainer } from "react-toastify";
 import MapCustom from "../components/map";
 const Listings = () => {
   const [city, setCity] = useState("hanoi");
+  // const city = useRef("hanoi");
 
   return (
     <>
