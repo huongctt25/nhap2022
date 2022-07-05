@@ -1,6 +1,7 @@
 import { Link, NavLink } from "react-router-dom";
 
 const NavTop = () => {
+  console.log("nav");
   return (
     <nav
       className="navbar navbar-expand-lg"
@@ -20,6 +21,11 @@ const NavTop = () => {
           <li className="nav-item">
             <NavLink to="/peoples" className="nav-link ">
               People
+            </NavLink>
+          </li>
+          <li className="nav-item">
+            <NavLink to="/chats" className="nav-link ">
+              Chat
             </NavLink>
           </li>
           <li className="nav-item active">

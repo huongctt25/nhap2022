@@ -18,7 +18,6 @@ const Home = () => {
   ];
   const [photoIndex, setPhotoIndex] = useState(0);
   const [openModal, setOpenModal] = useState(false);
-  console.log("home");
   const handleClick = () => {
     setOpenModal(true);
   };
@@ -45,7 +44,7 @@ const Home = () => {
     <div className="container">
       <div className="center">
         <h1>Home</h1>
-        <div className="row">{imgArray}</div>
+        {/* <div className="row">{imgArray}</div> */}
         <button onClick={handleClick}>Hello</button>
         <SlideShow />
         {openModal && (

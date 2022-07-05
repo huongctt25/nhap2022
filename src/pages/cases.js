@@ -7,11 +7,9 @@ const fetchPeople = async () => {
 };
 
 const Cases = () => {
-  console.log("render");
   const { data } = useQuery("people", fetchPeople);
 
   if (!data) return <h5>Cannot find data</h5>;
-  // console.log(data.results);
   const list = data.results.map((people, index) => (
     <Card name={people.name} height={people.height} key={index} />
   ));

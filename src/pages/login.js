@@ -4,29 +4,29 @@ import "../css/style.css";
 import "../css/bootstrap.css";
 import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router-dom";
+import { useRef } from "react";
+import { getAsyncWithToken, postAsync } from "../constant/request";
+import { useCookies } from "react-cookie";
 
 const Login = () => {
-  const [email, setEmail] = useState("");
-  const [city, setCity] = useState("hanoi");
-  const [file, setFile] = useState(null);
-  console.log("login");
   const navigate = useNavigate();
+  const email = useRef();
+  const password = useRef();
+  const [cookie, setCookie] = useCookies(["currentuser"]);
 
-  const handleLogin = (email, city) => {
-    toast.success("Hello");
-    console.log({
-      payload: {
-        email,
-        city,
-        file,
-      },
-    });
-    setEmail("");
-    setCity("hanoi");
-    setFile(null);
-    setTimeout(() => {
-      navigate("/listings");
-    }, 3000);
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    const data = {
+      username: email.current.value,
+      password: password.current.value,
+    };
+    const url = process.env.REACT_APP_BACK_END + "/auth/signin";
+    const response = await postAsync(url, data);
+    if (response.status === 201) {
+      await setCookie("currentuser", response.data.access_token);
+      await setCookie("userid", response.data.id);
+    }
+    navigate("/people");
   };
   return (
     <>
@@ -35,38 +35,28 @@ const Login = () => {
         <div className="center">
           <h1>Hello</h1>
         </div>
-        <form
-          onSubmit={(e) => {
-            e.preventDefault();
-            handleLogin(email, city);
-          }}
-          encType="multipart/form-data"
-        >
+        <form onSubmit={handleLogin}>
           <div className="form-group">
-            <label htmlFor="exampleFormControlInput1">Email address</label>
+            <label htmlFor="exampleFormControlInput1">Email: </label>
             <input
               style={{ borderRadius: "15px" }}
               type="email"
               className="form-control custom-input"
               placeholder="name@example.com"
-              onChange={(e) => setEmail(e.target.value)}
-              value={email}
+              ref={email}
             />
           </div>
           <div className="form-group">
-            <label htmlFor="exampleFormControlSelect2">City: </label>
-            <select
-              className="form-select"
-              aria-label="Default select example"
-              value={city}
-              onChange={(e) => setCity(e.target.value)}
-            >
-              <option value="hanoi">Hanoi</option>
-              <option value="danang">Danang</option>
-              <option value="hcm">HCM</option>
-            </select>
+            <label htmlFor="exampleFormControlInput1">Password: </label>
+            <input
+              style={{ borderRadius: "15px" }}
+              type="password"
+              className="form-control custom-input"
+              placeholder=""
+              ref={password}
+            />
           </div>
-          <div className="form-group">
+          {/* <div className="form-group">
             <label htmlFor="exampleFormControlFile1">Example file input</label>
             <input
               type="file"
@@ -75,7 +65,7 @@ const Login = () => {
               multiple
               onChange={(e) => setFile(e.target.files)}
             />
-          </div>
+          </div> */}
           <button type="submit" className="btn btn-primary">
             Submit
           </button>
