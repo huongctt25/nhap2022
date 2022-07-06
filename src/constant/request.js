@@ -22,6 +22,22 @@ export async function postAsync(url, data = {}) {
     };
   }
 }
+export async function getAsync(url, param) {
+  try {
+    const response = await axios.get(url);
+
+    return response;
+  } catch (ex) {
+    const { status = 400, data = {} } = ex?.response || {};
+    const error = data?.errors || [];
+    return {
+      status,
+      data: {},
+      message: error[0]?.message || "",
+      code: error[0]?.code || 0,
+    };
+  }
+}
 export async function getAsyncWithToken(url, param) {
   try {
     const response = await axios.get(url, {

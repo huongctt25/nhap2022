@@ -1,71 +1,110 @@
 import classes from "./chat.module.css";
 import { AiOutlineSend } from "react-icons/ai";
-const ChatBox = (props) => {
+import { useEffect, useState, useRef } from "react";
+import { getCookie } from "../constant/request";
+import { io } from "socket.io-client";
+import axios from "axios";
+const ChatBox = ({ socket, ...props }) => {
+  const userid = getCookie("userid");
+  const [messages, setMessages] = useState([]);
+  const [arrivalMessage, setArrivalMessage] = useState(null);
+  const message = useRef();
+
+  useEffect(() => {
+    if (socket.current) {
+      socket.current.on("message", (data) => {
+        if (
+          data.from === parseInt(userid) ||
+          data.from === parseInt(props.chatuserid)
+        ) {
+          setArrivalMessage({ message: data.message, from: data.from });
+        }
+      });
+      socket.current.emit("connection", {
+        userid: userid,
+      });
+    }
+    async function getData() {
+      const url = process.env.REACT_APP_BACK_END + "/chats/messages";
+      const response = await axios.post(url, {
+        users: [parseInt(userid), parseInt(props.chatuserid)],
+      });
+      setMessages(response.data);
+    }
+    if (userid && props.chatuserid) {
+      getData();
+    } else {
+      setMessages([]);
+    }
+  }, [props.chatuserid, props.chatUserEmail, userid]);
+
+  useEffect(() => {
+    arrivalMessage && setMessages((prev) => [...prev, arrivalMessage]);
+  }, [arrivalMessage]);
+
+  const submitHandler = async (e) => {
+    e.preventDefault();
+    const url = process.env.REACT_APP_BACK_END + "/chats";
+
+    await axios.post(url, {
+      from: parseInt(userid),
+      to: parseInt(props.chatuserid),
+      message: message.current.value,
+    });
+
+    socket.current.emit("sendmessage", {
+      message: message.current.value,
+      from: parseInt(userid),
+      to: parseInt(props.chatuserid),
+    });
+    message.current.value = "";
+  };
+
   return (
     <>
-      {" "}
       <div className="container">
-        <div className={classes["central-meta"]}>
+        <div
+          className={classes["central-meta"]}
+          style={{ backgroundColor: "rgba(215, 194, 255,0.2)" }}
+        >
           <div className={classes["messages"]}>
             <div className={classes["message-box"]}>
               <div className={classes["peoples-mesg-box"]}>
                 <div className={classes["conversation-head"]}>
                   <span>
-                    <a>Huong xinh</a>
+                    <a>To: {props.chatUserEmail} </a>
+                    <a>From: {props.currentUser?.email}</a>
                   </span>
                 </div>
                 <ul className={classes["chatting-area"]} id="message-template">
-                  <li className={classes["you"]}>
-                    <p style={{ padding: "10px" }}>Hello 1234</p>
-                  </li>
-                  <li className={classes["me"]}>
-                    <p style={{ padding: "10px" }}>How are you</p>
-                  </li>
-                  <li className={classes["you"]}>
-                    <p style={{ padding: "10px" }}>I'm fine thank you </p>
-                  </li>
-                  <li className={classes["you"]}>
-                    <p style={{ padding: "10px" }}>Hello 1234</p>
-                  </li>
-                  <li className={classes["me"]}>
-                    <p style={{ padding: "10px" }}>How are you</p>
-                  </li>
-                  <li className={classes["you"]}>
-                    <p style={{ padding: "10px" }}>I'm fine thank you </p>
-                  </li>
-                  <li className={classes["you"]}>
-                    <p style={{ padding: "10px" }}>Hello 1234</p>
-                  </li>
-                  <li className={classes["me"]}>
-                    <p style={{ padding: "10px" }}>How are you</p>
-                  </li>
-                  <li className={classes["you"]}>
-                    <p style={{ padding: "10px" }}>I'm fine thank you </p>
-                  </li>
-                  <li className={classes["you"]}>
-                    <p style={{ padding: "10px" }}>Hello 1234</p>
-                  </li>
-                  <li className={classes["me"]}>
-                    <p style={{ padding: "10px" }}>How are you</p>
-                  </li>
-                  <li className={classes["you"]}>
-                    <p style={{ padding: "10px" }}>
-                      One of the most diverse and unique cuisines in Asia and
-                      the world with its colorful flavors of sweet sour spicy
-                      and the crunchy texture of fresh herbs that dial down the
-                      strong flavors, creating a culinary harmony in your mouth.
-                      Here are the top 10 dishes you MUST try as a tourist in
-                      Hanoi, Vietnam.
-                    </p>
-                  </li>
+                  {messages.map((msg) => {
+                    if (msg.from === parseInt(userid)) {
+                      return (
+                        <li className={classes["me"]}>
+                          <p style={{ padding: "10px" }}>{msg.message}</p>
+                        </li>
+                      );
+                    } else {
+                      return (
+                        <li className={classes["you"]}>
+                          <p style={{ padding: "10px" }}>{msg.message}</p>
+                        </li>
+                      );
+                    }
+                  })}
                 </ul>
               </div>
             </div>
-            <form>
+            <form onSubmit={submitHandler}>
               <div className="row">
-                <textarea
-                  style={{ width: "90%", borderRadius: "10px" }}
-                ></textarea>
+                <input
+                  style={{
+                    width: "90%",
+                    height: "50px",
+                    borderRadius: "10px",
+                  }}
+                  ref={message}
+                />
                 <button
                   title="send"
                   type="submit"
